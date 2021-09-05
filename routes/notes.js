@@ -21,8 +21,6 @@ note.post("/", (req, res) => {
       id: uuidv4(),
     };
 
-    console.log(newNote);
-
     fs.readFile("./db/notes.json", "utf8", (err, data) => {
       if (err) {
         console.error(err);
@@ -35,7 +33,7 @@ note.post("/", (req, res) => {
           (err) =>
             err
               ? console.error(err)
-              : console.info(`\nData written to './db/notes.json'`)
+              : console.info(`\nData written to notes`)
         );
       }
     });
@@ -52,28 +50,36 @@ note.post("/", (req, res) => {
 });
 
 note.delete("/:id", (req, res) => {
-    console.log(req.params.id);
+  fs.readFile("./db/notes.json", "utf8", (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      const notesData = JSON.parse(data);
 
-    fs.readFile("./db/notes.json", "utf8", (err, data) => {
-      if (err) {
-        console.error(err);
-      } else {
-        const notesData = JSON.parse(data);
-        
-        // For each notesData go through until req.params.id === notesData[i].id
-        // Splice at this index to remove note
-        // Return the new notesData array
-
-        fs.writeFile(
-          "./db/notes.json",
-          JSON.stringify(notesData, null, 4),
-          (err) =>
-            err
-              ? console.error(err)
-              : console.info(`\nData written to './db/notes.json'`)
-        );
+      for (let i = 0; i < notesData.length; i++) {
+        const element = notesData[i];
+        if (element.id === req.params.id) {
+          notesData.splice(i, 1);
+        }
       }
-    });
+
+      fs.writeFile(
+        "./db/notes.json",
+        JSON.stringify(notesData, null, 4),
+        (err) =>
+          err
+            ? console.error(err)
+            : console.info(`\nData deleted from notes`)
+      );
+
+      const response = {
+        status: "success",
+        body: "Note deleted",
+      };
+
+      res.json(response);
+    }
+  });
 });
 
 module.exports = note;
