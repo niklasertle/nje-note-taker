@@ -47,10 +47,33 @@ note.post("/", (req, res) => {
 
     res.json(response);
   } else {
-    res.json("Error in posting feedback");
+    res.json("Error in posting note");
   }
 });
 
-note.delete("/:id", (req, res) => {});
+note.delete("/:id", (req, res) => {
+    console.log(req.params.id);
+
+    fs.readFile("./db/notes.json", "utf8", (err, data) => {
+      if (err) {
+        console.error(err);
+      } else {
+        const notesData = JSON.parse(data);
+        
+        // For each notesData go through until req.params.id === notesData[i].id
+        // Splice at this index to remove note
+        // Return the new notesData array
+
+        fs.writeFile(
+          "./db/notes.json",
+          JSON.stringify(notesData, null, 4),
+          (err) =>
+            err
+              ? console.error(err)
+              : console.info(`\nData written to './db/notes.json'`)
+        );
+      }
+    });
+});
 
 module.exports = note;
