@@ -1,0 +1,13 @@
+body {
+    background-color: grey;
+}
+
+div {
+    font-size: larger;
+    text-align: center;
+    background-color: white;
+    width: 200px;
+    position: fixed;
+    margin-top: 200px;
+    margin-left: 40%;
+}
