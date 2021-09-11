@@ -13,7 +13,7 @@ This is a note taking app, it uses a .json file that has a stringified array in 
 ## Links
 ![Walkthrough Video](./assets/note-taker-g.gif)<br>
 [Walkthrough Video](https://www.youtube.com/watch?v=T4ICrVqhsMQ) <br>
-[Deployed App]() <br>
+[Deployed App](https://young-oasis-55709.herokuapp.com/) <br>
 [GitHub](https://github.com/niklasertle/nje-note-taker)
 
 ## Contact
